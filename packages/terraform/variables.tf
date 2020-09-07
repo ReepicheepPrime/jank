@@ -1,7 +1,8 @@
 locals {
   default_tags = {
-    project = lower(trimspace(join("-", split(" ", var.project))))
+    project = var.project
   }
+  project = lower(trimspace(join("-", split(" ", var.project))))
 }
 
 variable "project" {

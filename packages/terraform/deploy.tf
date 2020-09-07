@@ -1,14 +1,14 @@
 # deploy user
 resource "aws_iam_user" "deploy" {
   name = "deploy"
-  path = "/${var.project}/"
+  path = "/${local.project}/"
   tags = local.default_tags
 }
 
 # deploy role
 resource "aws_iam_role" "deploy" {
   name               = "deploy"
-  path               = "/${var.project}/"
+  path               = "/${local.project}/"
   assume_role_policy = data.aws_iam_policy_document.aws_access_assume_role.json
   tags               = local.default_tags
 }
@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "deploy_iam" {
     condition {
       test     = "ArnEquals"
       variable = "aws:SourceArn"
-      values   = ["arn:aws:iam::*:role/${var.project}/*"]
+      values   = ["arn:aws:iam::*:role/${local.project}/*"]
     }
   }
 
