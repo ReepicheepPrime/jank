@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "aws_access_assume_role" {
   }
 }
 
-# deploy perms
+# IAM perms
 resource "aws_iam_role_policy" "deploy_iam" {
   name   = "ManageDeployIam"
   role   = aws_iam_role.deploy.id
