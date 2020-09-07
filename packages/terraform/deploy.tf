@@ -33,6 +33,22 @@ resource "aws_iam_role_policy" "deploy_iam" {
 
 data "aws_iam_policy_document" "deploy_iam" {
   statement {
+    sid = "GetUsers"
+    actions = [
+      "iam:GetUser",
+      "iam:GetUserPolicy",
+      "iam:ListAttachedUserPolicies",
+      "iam:ListUserPolicies",
+    ]
+    resources = ["arn:aws:iam::*:user/${local.project}/*"]
+    condition {
+      test     = "ArnEquals"
+      variable = "aws:SourceArn"
+      values   = ["arn:aws:iam::*:user/${local.project}/*"]
+    }
+  }
+
+  statement {
     sid = "ModifyRoles"
     actions = [
       "iam:*Role",
@@ -42,7 +58,7 @@ data "aws_iam_policy_document" "deploy_iam" {
       "iam:ListAttachedRolePolicies",
       "iam:ListRolePolicies",
     ]
-    resources = ["arn:aws:iam::*:role/deploy-*"]
+    resources = ["arn:aws:iam::*:role/${local.project}/*"]
     condition {
       test     = "ArnEquals"
       variable = "aws:SourceArn"
@@ -53,6 +69,7 @@ data "aws_iam_policy_document" "deploy_iam" {
   statement {
     sid = "ListAll"
     actions = [
+      "iam:ListUsers"
       "iam:ListRoles"
     ]
     resources = ["*"]
