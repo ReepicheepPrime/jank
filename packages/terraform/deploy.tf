@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "deploy_iam" {
       "iam:GetUser",
       "iam:GetUserPolicy",
       "iam:ListAttachedUserPolicies",
-      "iam:ListUserPolicies",
+      "iam:ListUserPolicies"
     ]
     resources = ["arn:aws:iam::*:user/${local.project}/*"]
     condition {
@@ -69,7 +69,7 @@ data "aws_iam_policy_document" "deploy_iam" {
   statement {
     sid = "ListAll"
     actions = [
-      "iam:ListUsers"
+      "iam:ListUsers",
       "iam:ListRoles"
     ]
     resources = ["*"]
