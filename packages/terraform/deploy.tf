@@ -95,7 +95,7 @@ resource "aws_iam_role_policy" "deploy_ec2" {
 
 data "aws_iam_policy_document" "deploy_ec2" {
   statement {
-    id = "Metadata"
+    sid = "Metadata"
     actions = [
       "DescribeAvailabilityZones"
     ]
