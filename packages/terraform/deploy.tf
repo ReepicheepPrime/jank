@@ -75,3 +75,30 @@ data "aws_iam_policy_document" "deploy_iam" {
     resources = ["*"]
   }
 }
+
+# VPC perms
+resource "aws_iam_role_policy" "deploy_vpc" {
+  name   = "ManageVPC"
+  role   = aws_iam_role.deploy.id
+  policy = data.aws_iam_policy_document.deploy_vpc.json
+}
+
+data "aws_iam_policy_document" "deploy_vpc" {
+}
+
+# EC2/ECS perms
+resource "aws_iam_role_policy" "deploy_ec2" {
+  name   = "ManageEC2"
+  role   = aws_iam_role.deploy.id
+  policy = data.aws_iam_policy_document.deploy_ec2.json
+}
+
+data "aws_iam_policy_document" "deploy_ec2" {
+  statement {
+    id = "Metadata"
+    actions = [
+      "DescribeAvailabilityZones"
+    ]
+    resources = ["*"]
+  }
+}
